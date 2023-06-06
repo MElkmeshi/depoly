@@ -1,5 +1,5 @@
 const express = require('express')
-
+const request = require('request-promise')
 const app = express()
 const PORT = 4000
 
@@ -122,7 +122,7 @@ class RedTech {
     }
   }
 }
-app.get("/a" ,async (req, res) => {
+app.post("/a" ,async (req, res) => {
   const Value = req.body.key;
   const Field = "field_1";
   const SiteName = "REDRestaurants";
