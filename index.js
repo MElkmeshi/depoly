@@ -1,15 +1,11 @@
-const express = require('express')
-const request = require('request-promise')
-const app = express()
-const PORT = 4000
-
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `)
-})
-
+const express = require("express");
+const request = require( "request-promise");
+const dotenv = require("dotenv");
+dotenv.config();
+const app = express();
+const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 class RedTech {
   static TenantName = "redtechly0";
   static ClientID = "6849427b-5ac7-4342-b067-77b621f8f5ff";
@@ -122,7 +118,7 @@ class RedTech {
     }
   }
 }
-app.post("/a" ,async (req, res) => {
+app.get("/api" ,async (req, res) => {
   const Value = req.body.key;
   const Field = "field_1";
   const SiteName = "REDRestaurants";
@@ -211,17 +207,12 @@ app.post("/a" ,async (req, res) => {
   };
   res.json(response);
 });
-
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hey this is my API running 🥳')
-})
-
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ')
-})
-
-// Export the Express API
-module.exports = app
+app.get("/api/all", async (req, res) => {
+  const ListName = "SaqidaniCart";
+  const SiteName = "REDRestaurants";
+  let Saqidani = new RedTech(ListName, SiteName);
+  res.json(await Saqidani.getListAllItems());
+});
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
